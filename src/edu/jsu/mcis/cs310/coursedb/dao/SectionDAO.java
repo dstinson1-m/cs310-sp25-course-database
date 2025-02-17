@@ -31,6 +31,27 @@ public class SectionDAO {
                 
                 // INSERT YOUR CODE HERE
                 
+                ps = conn.prepareStatement(QUERY_FIND);
+                ps.setInt(1, termid);
+                ps.setString(2, subjectid);
+                ps.setString(3, num);
+                
+                rs = ps.executeQuery();
+                
+                rsmd = rs.getMetaData();
+                if (rsmd != null) {
+                    int columnCount = rsmd.getColumnCount();
+                    System.out.println("Number of columns: " + columnCount);
+                    
+                    for (int i = 1; i <= columnCount; i++) {
+                        System.out.println("Column " + i + ": " + rsmd.getColumnName(i));
+                    }
+                } else {
+                    System.out.println("ResultSetMetaData is null. No metadata available");
+                }
+                
+                result = DAOUtility.getResultSetAsJson(rs);
+                
             }
             
         }
